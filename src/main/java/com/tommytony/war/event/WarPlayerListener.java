@@ -54,7 +54,6 @@ public class WarPlayerListener implements Listener {
     /**
      * Correctly removes quitting players from warzones
      *
-     * @see Listener.onPlayerQuit()
      */
     @EventHandler
     public void onPlayerQuit(final PlayerQuitEvent event) {
