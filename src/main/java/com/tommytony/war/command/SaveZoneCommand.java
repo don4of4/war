@@ -54,9 +54,7 @@ public class SaveZoneCommand extends AbstractZoneMakerCommand {
             if (this.args.length > 1) {
                 // More than one param: the arguments need to be shifted
                 String[] newargs = new String[this.args.length - 1];
-                for (int i = 1; i < this.args.length; i++) {
-                    newargs[i - 1] = this.args[i];
-                }
+                System.arraycopy(this.args, 1, newargs, 0, this.args.length - 1);
                 this.args = newargs;
             }
         }

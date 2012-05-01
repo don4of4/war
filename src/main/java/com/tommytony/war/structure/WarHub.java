@@ -31,7 +31,7 @@ public class WarHub {
     private BlockFace orientation;
 
     public WarHub(Location location, String hubOrientation) {
-        int yaw = 0;
+        int yaw;
         if (hubOrientation.equals("south")) {
             yaw = 270;
             this.setOrientation(BlockFace.SOUTH);
@@ -69,7 +69,7 @@ public class WarHub {
     public void setLocation(Location loc) {
         this.location = loc;
         // Lobby orientation
-        int yaw = 0;
+        int yaw;
         if (this.location.getYaw() >= 0) {
             yaw = (int) (this.location.getYaw() % 360);
         } else {

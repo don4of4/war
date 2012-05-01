@@ -129,7 +129,7 @@ public class ZoneLobby {
         this.createVolumeOrReset(lobbyWorld);
 
         // Lobby orientation
-        int yaw = 0;
+        int yaw;
         if (playerLocation.getYaw() >= 0) {
             yaw = (int) (playerLocation.getYaw() % 360);
         } else {
@@ -514,14 +514,10 @@ public class ZoneLobby {
     }
 
     public boolean isAutoAssignGate(Location location) {
-        if (this.autoAssignGate != null
+        return this.autoAssignGate != null
                 && (location.getBlockX() == this.autoAssignGate.getX()
                 && location.getBlockY() == this.autoAssignGate.getY()
-                && location.getBlockZ() == this.autoAssignGate.getZ())) {
-            return true;
-        }
-
-        return false;
+                && location.getBlockZ() == this.autoAssignGate.getZ());
     }
 
     public Volume getVolume() {
@@ -537,14 +533,10 @@ public class ZoneLobby {
     }
 
     public boolean isInWarHubLinkGate(Location location) {
-        if (this.warHubLinkGate != null
+        return this.warHubLinkGate != null
                 && location.getBlockX() == this.warHubLinkGate.getX()
                 && location.getBlockY() == this.warHubLinkGate.getY()
-                && location.getBlockZ() == this.warHubLinkGate.getZ()) {
-            return true;
-        }
-
-        return false;
+                && location.getBlockZ() == this.warHubLinkGate.getZ();
     }
 
     public boolean blockIsAGateBlock(Block block, BlockFace blockWall) {
@@ -703,10 +695,6 @@ public class ZoneLobby {
         gateExitVolume.setCornerOne(out.getRelative(left).getRelative(BlockFace.DOWN));
         gateExitVolume.setCornerTwo(gate.getRelative(right, 1).getRelative(BlockFace.UP, 2));
 
-        if (gateExitVolume.contains(location)) {
-            return true;
-        }
-
-        return false;
+        return gateExitVolume.contains(location);
     }
 }

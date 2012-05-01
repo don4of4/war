@@ -43,7 +43,7 @@ public class WarzoneTxtMapper {
 
         // world
         String worldStr = warzoneConfig.getProperty("world");
-        World world = null;
+        World world;
         if (worldStr == null || worldStr.equals("")) {
             world = War.war.getServer().getWorlds().get(0); // default to first world
         } else {

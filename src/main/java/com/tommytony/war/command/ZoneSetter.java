@@ -48,7 +48,7 @@ public class ZoneSetter {
                 // change existing warzone
                 this.resetWarzone(warzone, msgString);
                 warzone.getVolume().setNorthwest(northwestBlock);
-                msgString.append("Warzone " + warzone.getName() + " modified. Northwesternmost point set to x:" + warzone.getVolume().getNorthwestX() + " z:" + warzone.getVolume().getNorthwestZ() + ". ");
+                msgString.append("Warzone ").append(warzone.getName()).append(" modified. Northwesternmost point set to x:").append(warzone.getVolume().getNorthwestX()).append(" z:").append(warzone.getVolume().getNorthwestZ()).append(". ");
             }
             this.saveIfReady(warzone, msgString);
         } catch (NotNorthwestException e) {
@@ -91,7 +91,7 @@ public class ZoneSetter {
                 // change existing warzone
                 this.resetWarzone(warzone, msgString);
                 warzone.getVolume().setSoutheast(southeastBlock);
-                msgString.append("Warzone " + warzone.getName() + " modified. Southeasternmost point set to x:" + warzone.getVolume().getSoutheastX() + " z:" + warzone.getVolume().getSoutheastZ() + ". ");
+                msgString.append("Warzone ").append(warzone.getName()).append(" modified. Southeasternmost point set to x:").append(warzone.getVolume().getSoutheastX()).append(" z:").append(warzone.getVolume().getSoutheastZ()).append(". ");
             }
             this.saveIfReady(warzone, msgString);
         } catch (NotSoutheastException e) {
@@ -138,7 +138,7 @@ public class ZoneSetter {
                 // change existing warzone
                 this.resetWarzone(warzone, msgString);
                 warzone.getVolume().setZoneCornerOne(corner1Block);
-                msgString.append("Warzone " + warzone.getName() + " modified. Corner 1 set to x:" + corner1Block.getX() + " y:" + corner1Block.getY() + " z:" + corner1Block.getZ() + ". ");
+                msgString.append("Warzone ").append(warzone.getName()).append(" modified. Corner 1 set to x:").append(corner1Block.getX()).append(" y:").append(corner1Block.getY()).append(" z:").append(corner1Block.getZ()).append(". ");
             }
             this.saveIfReady(warzone, msgString);
         } catch (TooSmallException e) {
@@ -180,7 +180,7 @@ public class ZoneSetter {
                 // change existing warzone
                 this.resetWarzone(warzone, msgString);
                 warzone.getVolume().setZoneCornerTwo(corner2Block);
-                msgString.append("Warzone " + warzone.getName() + " modified. Corner 2 set to x:" + corner2Block.getX() + " y:" + corner2Block.getY() + " z:" + corner2Block.getZ() + ". ");
+                msgString.append("Warzone ").append(warzone.getName()).append(" modified. Corner 2 set to x:").append(corner2Block.getX()).append(" y:").append(corner2Block.getY()).append(" z:").append(corner2Block.getZ()).append(". ");
             }
             this.saveIfReady(warzone, msgString);
         } catch (TooSmallException e) {
@@ -212,7 +212,7 @@ public class ZoneSetter {
                 warzone.getLobby().getVolume().resetBlocks();
             }
             int reset = warzone.getVolume().resetBlocks();
-            msgString.append(reset + " blocks reset. ");
+            msgString.append(reset).append(" blocks reset. ");
         }
     }
 

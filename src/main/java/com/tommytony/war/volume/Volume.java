@@ -477,7 +477,7 @@ public class Volume {
         try {
             int i = 0, j = 0, k = 0;
             int x, y, z;
-            Block currentBlock = null;
+            Block currentBlock;
             if (this.hasTwoCorners() && this.isSaved()) {
                 x = this.getMinX();
                 for (i = 0; i < this.getSizeX(); i++) {

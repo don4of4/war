@@ -26,7 +26,7 @@ public class RestoreWarhubJob implements Runnable {
         int hubX = Integer.parseInt(hubStrSplit[0]);
         int hubY = Integer.parseInt(hubStrSplit[1]);
         int hubZ = Integer.parseInt(hubStrSplit[2]);
-        World world = null;
+        World world;
         String worldName;
         String hubOrientation = "west";
         if (hubStrSplit.length > 3) {

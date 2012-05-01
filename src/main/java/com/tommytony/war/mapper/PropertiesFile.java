@@ -364,11 +364,7 @@ public final class PropertiesFile {
      *                The <code>key</code> we will retrieve the property from, if no <code>key</code> is found default to false
      */
     public boolean getBoolean(String key) {
-        if (this.containsKey(key)) {
-            return Boolean.parseBoolean(this.getProperty(key));
-        }
-
-        return false;
+        return this.containsKey(key) && Boolean.parseBoolean(this.getProperty(key));
     }
 
     /**

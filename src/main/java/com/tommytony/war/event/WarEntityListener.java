@@ -67,7 +67,7 @@ public class WarEntityListener implements Listener {
         //War.war.log(cause.toString(), Level.INFO);
         // Maybe an arrow was thrown
         if (attacker != null && event.getDamager() instanceof Projectile && ((Projectile)event.getDamager()).getShooter() instanceof Player){
-            attacker = ((Player)((Projectile)event.getDamager()).getShooter());
+            attacker = ((Projectile)event.getDamager()).getShooter();
         }
 
         if (attacker != null && defender != null && attacker instanceof Player && defender instanceof Player) {
@@ -129,7 +129,7 @@ public class WarEntityListener implements Listener {
                     }
 
                     if (attackerWarzone.getWarzoneConfig().getBoolean(WarzoneConfig.DEATHMESSAGES)) {
-                        String killMessage = "";
+                        String killMessage;
                         String attackerString = attackerTeam.getKind().getColor() + a.getName();
                         String defenderString = defenderTeam.getKind().getColor() + d.getName();
 
@@ -171,7 +171,6 @@ public class WarEntityListener implements Listener {
                     if (!defenderWarzone.getWarzoneConfig().getBoolean(WarzoneConfig.REALDEATHS)) {
                         // fast respawn, don't really die
                         event.setCancelled(true);
-                        return;
                     }
 
                 } else if (defenderWarzone.isBombThief(d.getName()) && d.getLocation().distance(a.getLocation()) < 2) {
@@ -262,7 +261,7 @@ public class WarEntityListener implements Listener {
                 }
 
                 if (defenderWarzone.getWarzoneConfig().getBoolean(WarzoneConfig.DEATHMESSAGES)) {
-                    String deathMessage = "";
+                    String deathMessage;
                     String defenderString = Team.getTeamByPlayerName(d.getName()).getKind().getColor() + d.getName();
 
                     if (event.getDamager() instanceof TNTPrimed) {
@@ -280,7 +279,6 @@ public class WarEntityListener implements Listener {
                 if (!defenderWarzone.getWarzoneConfig().getBoolean(WarzoneConfig.REALDEATHS)) {
                     // fast respawn, don't really die
                     event.setCancelled(true);
-                    return;
                 }
             }
         }
@@ -441,7 +439,7 @@ public class WarEntityListener implements Listener {
 
                 // Detect death, prevent it and respawn the player
                 if (zone.getWarzoneConfig().getBoolean(WarzoneConfig.DEATHMESSAGES)) {
-                    String deathMessage = "";
+                    String deathMessage;
                     String cause = " died";
                     if (event.getCause() == DamageCause.FIRE || event.getCause() == DamageCause.FIRE_TICK
                             || event.getCause() == DamageCause.LAVA || event.getCause() == DamageCause.LIGHTNING) {

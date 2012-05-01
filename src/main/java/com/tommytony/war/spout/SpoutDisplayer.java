@@ -287,7 +287,7 @@ public class SpoutDisplayer {
             gradient.setAnchor(WidgetAnchor.TOP_LEFT);
             gradient.setTopColor(new Color(0.0F, 0.0F, 0.0F, 0.4F)); // (order is Red, Green, Blue, Alpha)
             gradient.setBottomColor(new Color(0.0F, 0.0F, 0.0F, 0.0F));
-            gradient.setHeight(statsOffset.get(1) + 4).setWidth((int)(statsOffset.get(0)));
+            gradient.setHeight(statsOffset.get(1) + 4).setWidth(statsOffset.get(0));
 
             player.getMainScreen().attachWidget(War.war, gradient);
 
@@ -306,7 +306,7 @@ public class SpoutDisplayer {
             teamGradient.setY(2 + LINE_HEIGHT_WITH_MARGIN);
             teamGradient.setTopColor(spoutColor);
             teamGradient.setBottomColor(new Color(256, 256, 256, 1.0F));
-            teamGradient.setHeight(2).setWidth((int)(statsOffset.get(0)));
+            teamGradient.setHeight(2).setWidth(statsOffset.get(0));
 
             player.getMainScreen().attachWidget(War.war, teamGradient);
 

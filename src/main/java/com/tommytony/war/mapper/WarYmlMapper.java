@@ -21,8 +21,9 @@ import com.tommytony.war.structure.WarHub;
 public class WarYmlMapper {
 
     public static void load() {
-        (War.war.getDataFolder()).mkdir();
-        (new File(War.war.getDataFolder().getPath() + "/dat")).mkdir();
+        War.war.getDataFolder().mkdir();
+        new File(War.war.getDataFolder().getPath() + "/dat").mkdir();
+
         File warTxtFile = new File(War.war.getDataFolder().getPath() + "/war.txt");
         File warYmlFile = new File(War.war.getDataFolder().getPath() + "/war.yml");
 

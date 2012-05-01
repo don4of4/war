@@ -89,7 +89,7 @@ public class PreDeGaulleZoneVolumeMapper {
 
                 if (!onlyLoadCorners) {
                     DeferredBlockResetsJob deferred = new DeferredBlockResetsJob(world);
-                    int blockReads = 0, visitedBlocks = 0, x = 0, y = 0, z = 0, i = 0, j = 0, k = 0;
+                    int blockReads = 0, visitedBlocks = 0, x, y, z, i, j, k;
                     int diskBlockType;
                     byte diskBlockData;
                     Block worldBlock;
@@ -272,7 +272,6 @@ public class PreDeGaulleZoneVolumeMapper {
                 // if (scanner != null)
                 try {
                     in.close();
-                    in = null;
                     // scanner.close();
                     // scanner = null;
                 } catch (IOException e) {
@@ -289,7 +288,8 @@ public class PreDeGaulleZoneVolumeMapper {
         if (volume.hasTwoCorners()) {
             BufferedWriter out = null;
             try {
-                (new File(war.getDataFolder().getPath() + "/dat/warzone-" + zoneName)).mkdir();
+                new File(war.getDataFolder().getPath() + "/dat/warzone-" + zoneName).mkdir();
+
                 if (zoneName.equals("")) {
                     out = new BufferedWriter(new FileWriter(new File(war.getDataFolder().getPath() + "/dat/volume-" + volume.getName() + ".dat")));
                 } else {
@@ -313,9 +313,7 @@ public class PreDeGaulleZoneVolumeMapper {
                 out.write(Integer.toString(volume.getCornerTwo().getZ()));
                 out.newLine();
 
-                int x = 0;
-                int y = 0;
-                int z = 0;
+                int x, y, z;
                 Block block;
                 int typeId;
                 byte data;

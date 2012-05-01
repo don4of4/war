@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -61,7 +60,6 @@ public class War extends JavaPlugin {
     private WarServerListener serverListener = new WarServerListener();
 
     private WarCommandHandler commandHandler = new WarCommandHandler();
-    private Logger logger;
     private PluginDescriptionFile desc = null;
     private boolean loaded = false;
     private boolean isSpoutServer = false;
@@ -115,7 +113,6 @@ public class War extends JavaPlugin {
     public void loadWar() {
         this.setLoaded(true);
         this.desc = this.getDescription();
-        this.logger = this.getServer().getLogger();
 
         // Spout server detection
         try {
@@ -262,6 +259,7 @@ public class War extends JavaPlugin {
     /**
      * @see JavaPlugin.onCommand()
      */
+    @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         return this.commandHandler.handle(sender, cmd, args);
     }
@@ -340,9 +338,9 @@ public class War extends JavaPlugin {
                     if (loadout == null) {
                         loadout = new HashMap<Integer, ItemStack>();
                         team.getInventories().getLoadouts().put(loadoutName, loadout);
-                        returnMessage.append(loadoutName + " respawn loadout added.");
+                        returnMessage.append(loadoutName).append(" respawn loadout added.");
                     } else {
-                        returnMessage.append(loadoutName + " respawn loadout updated.");
+                        returnMessage.append(loadoutName).append(" respawn loadout updated.");
                     }
                     this.inventoryToLoadout(player, loadout);
                 }
@@ -350,9 +348,9 @@ public class War extends JavaPlugin {
                     String loadoutName = namedParams.get("deleteloadout");
                     if (team.getInventories().getLoadouts().keySet().contains(loadoutName)) {
                         team.getInventories().removeLoadout(loadoutName);
-                        returnMessage.append(" " + loadoutName + " loadout removed.");
+                        returnMessage.append(" ").append(loadoutName).append(" loadout removed.");
                     } else {
-                        returnMessage.append(" " + loadoutName + " loadout not found.");
+                        returnMessage.append(" ").append(loadoutName).append(" loadout not found.");
                     }
                 }
                 if (namedParams.containsKey("reward")) {
@@ -384,7 +382,7 @@ public class War extends JavaPlugin {
                 for(String author : namedParams.get("author").split(",")) {
                     if (!author.equals("") && !warzone.getAuthors().contains(author)) {
                         warzone.addAuthor(author);
-                        returnMessage.append(" author " + author + " added.");
+                        returnMessage.append(" author ").append(author).append(" added.");
                     }
                 }
             }
@@ -392,7 +390,7 @@ public class War extends JavaPlugin {
                 for(String author : namedParams.get("deleteauthor").split(",")) {
                     if (warzone.getAuthors().contains(author)) {
                         warzone.getAuthors().remove(author);
-                        returnMessage.append(" " + author + " removed from zone authors.");
+                        returnMessage.append(" ").append(author).append(" removed from zone authors.");
                     }
                 }
             }
@@ -408,9 +406,9 @@ public class War extends JavaPlugin {
                     if (loadout == null) {
                         loadout = new HashMap<Integer, ItemStack>();
                         warzone.getDefaultInventories().getLoadouts().put(loadoutName, loadout);
-                        returnMessage.append(loadoutName + " respawn loadout added.");
+                        returnMessage.append(loadoutName).append(" respawn loadout added.");
                     } else {
-                        returnMessage.append(loadoutName + " respawn loadout updated.");
+                        returnMessage.append(loadoutName).append(" respawn loadout updated.");
                     }
                     this.inventoryToLoadout(player, loadout);
                 }
@@ -418,9 +416,9 @@ public class War extends JavaPlugin {
                     String loadoutName = namedParams.get("deleteloadout");
                     if (warzone.getDefaultInventories().getLoadouts().keySet().contains(loadoutName)) {
                         warzone.getDefaultInventories().removeLoadout(loadoutName);
-                        returnMessage.append(" " + loadoutName + " loadout removed.");
+                        returnMessage.append(" ").append(loadoutName).append(" loadout removed.");
                     } else {
-                        returnMessage.append(" " + loadoutName + " loadout not found.");
+                        returnMessage.append(" ").append(loadoutName).append(" loadout not found.");
                     }
                 }
                 if (namedParams.containsKey("reward")) {
@@ -461,9 +459,9 @@ public class War extends JavaPlugin {
                     if (loadout == null) {
                         loadout = new HashMap<Integer, ItemStack>();
                         this.getDefaultInventories().addLoadout(loadoutName, loadout);
-                        returnMessage.append(loadoutName + " respawn loadout added.");
+                        returnMessage.append(loadoutName).append(" respawn loadout added.");
                     } else {
-                        returnMessage.append(loadoutName + " respawn loadout updated.");
+                        returnMessage.append(loadoutName).append(" respawn loadout updated.");
                     }
                     this.inventoryToLoadout(player, loadout);
                 }
@@ -472,12 +470,12 @@ public class War extends JavaPlugin {
                     if (this.getDefaultInventories().getLoadouts().keySet().contains(loadoutName)) {
                         if (this.getDefaultInventories().getLoadouts().keySet().size() > 1) {
                             this.getDefaultInventories().removeLoadout(loadoutName);
-                            returnMessage.append(" " + loadoutName + " loadout removed.");
+                            returnMessage.append(" ").append(loadoutName).append(" loadout removed.");
                         } else {
                             returnMessage.append(" Can't remove only loadout.");
                         }
                     } else {
-                        returnMessage.append(" " + loadoutName + " loadout not found.");
+                        returnMessage.append(" ").append(loadoutName).append(" loadout not found.");
                     }
                 }
                 if (namedParams.containsKey("reward")) {
@@ -489,7 +487,7 @@ public class War extends JavaPlugin {
                 if (namedParams.containsKey("rallypoint")) {
                     String zoneName = namedParams.get("rallypoint");
                     this.setZoneRallyPoint(zoneName, player);
-                    returnMessage.append(" rallypoint set for zone " + zoneName + ".");
+                    returnMessage.append(" rallypoint set for zone ").append(zoneName).append(".");
                 }
             }
 
@@ -725,11 +723,7 @@ public class War extends JavaPlugin {
      * @return		true if the player may build outside zones
      */
     public boolean canBuildOutsideZone(Player player) {
-        if (this.getWarConfig().getBoolean(WarConfig.BUILDINZONESONLY)) {
-            return player.hasPermission("war.build");
-        } else {
-            return true;
-        }
+        return !this.getWarConfig().getBoolean(WarConfig.BUILDINZONESONLY) || player.hasPermission("war.build");
     }
 
     /**
@@ -739,11 +733,7 @@ public class War extends JavaPlugin {
      * @return		true if the player may pvp outside zones
      */
     public boolean canPvpOutsideZones(Player player) {
-        if (this.getWarConfig().getBoolean(WarConfig.PVPINZONESONLY)) {
-            return player.hasPermission("war.pvp");
-        } else {
-            return true;
-        }
+        return !this.getWarConfig().getBoolean(WarConfig.PVPINZONESONLY) || player.hasPermission("war.pvp");
     }
 
     /**
@@ -850,10 +840,7 @@ public class War extends JavaPlugin {
     }
 
     public boolean inAnyWarzoneLobby(Location location) {
-        if (ZoneLobby.getLobbyByLocation(location) == null) {
-            return false;
-        }
-        return true;
+        return ZoneLobby.getLobbyByLocation(location) != null;
     }
 
     public List<String> getZoneMakersImpersonatingPlayers() {

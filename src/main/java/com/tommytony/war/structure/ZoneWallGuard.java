@@ -9,7 +9,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
-import com.tommytony.war.War;
 import com.tommytony.war.Warzone;
 import com.tommytony.war.volume.BlockInfo;
 
@@ -26,7 +25,7 @@ public class ZoneWallGuard {
     private BlockFace wall;
     private List<BlockInfo> glassified = new ArrayList<BlockInfo>();
 
-    public ZoneWallGuard(Player player, War war, Warzone warzone, BlockFace wall) {
+    public ZoneWallGuard(Player player, Warzone warzone, BlockFace wall) {
         this.player = player;
         this.wall = wall;
         this.playerLocation = player.getLocation();

@@ -101,7 +101,7 @@ public class ZoneVolumeMapper {
                 // Now use the block bytes to reset the world blocks
                 if (!onlyLoadCorners) {
                     DeferredBlockResetsJob deferred = new DeferredBlockResetsJob(world);
-                    int blockReads = 0, visitedBlocks = 0, x = 0, y = 0, z = 0, i = 0, j = 0, k = 0;
+                    int blockReads = 0, visitedBlocks = 0, x, y, z, i, j, k;
                     int diskBlockType;
                     byte diskBlockData;
                     Block worldBlock;
@@ -275,7 +275,8 @@ public class ZoneVolumeMapper {
             BufferedWriter signsWriter = null;
             BufferedWriter invsWriter = null;
             try {
-                (new File(War.war.getDataFolder().getPath() + "/dat/warzone-" + zoneName)).mkdir();
+                new File(War.war.getDataFolder().getPath() + "/dat/warzone-" + zoneName).mkdir();
+
                 String path = War.war.getDataFolder().getPath() + "/dat/warzone-" + zoneName + "/volume-" + volume.getName();
                 cornersWriter = new BufferedWriter(new FileWriter(new File(path + ".corners")));
                 blocksOutput = new FileOutputStream(new File(path + ".blocks"));
@@ -299,9 +300,7 @@ public class ZoneVolumeMapper {
                 cornersWriter.write(Integer.toString(volume.getCornerTwo().getZ()));
                 cornersWriter.newLine();
 
-                int x = 0;
-                int y = 0;
-                int z = 0;
+                int x, y, z;
                 Block block;
                 int typeId;
                 byte data;

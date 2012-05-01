@@ -20,7 +20,7 @@ public class ZoneMakerCommand extends AbstractWarCommand {
         if (sender instanceof Player) { // i hate java for this.
             if (!War.war.isZoneMaker((Player) sender)) {
                 for (String name : War.war.getZoneMakersImpersonatingPlayers()) {
-                    if (((Player) sender).getName().equals(name)) {
+                    if (sender.getName().equals(name)) {
                         return;
                     }
                 }

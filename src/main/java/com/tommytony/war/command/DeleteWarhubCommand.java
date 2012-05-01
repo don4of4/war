@@ -29,7 +29,7 @@ public class DeleteWarhubCommand extends AbstractWarAdminCommand {
             // reset existing hub
             War.war.getWarHub().getVolume().resetBlocks();
             VolumeMapper.delete(War.war.getWarHub().getVolume());
-            War.war.setWarHub((WarHub) null);
+            War.war.setWarHub(null);
             for (Warzone zone : War.war.getWarzones()) {
                 if (zone.getLobby() != null) {
                     zone.getLobby().getVolume().resetBlocks();

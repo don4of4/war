@@ -152,14 +152,13 @@ public class WarBlockListener implements Listener {
             // if the zone is unbreakable, no one but zone makers can break blocks (even then, zone makers in a team can't break blocks)
             War.war.badMsg(player, "The blocks in this zone are unbreakable - this also means you can't build!");
             cancelAndKeepItem(event);
-            return;
         }
     }
 
     private void cancelAndKeepItem(BlockPlaceEvent event) {
         event.setCancelled(true);
         ItemStack inHand = event.getItemInHand();
-        ItemStack newItemInHand = null;
+        ItemStack newItemInHand;
 
         if (inHand.getType() == Material.FIRE) {
             // Weird bukkit/mc behavior where item in hand is reported as fire while using flint & steel.
@@ -186,7 +185,6 @@ public class WarBlockListener implements Listener {
             }
             if (zone.isImportantBlock(event.getBlock().getRelative(event.getDirection(), event.getLength()+1))) {
                 event.setCancelled(true);
-                return;
             }
         }
     }
@@ -198,7 +196,6 @@ public class WarBlockListener implements Listener {
             Block b = event.getBlock().getRelative(event.getDirection(), 2);
             if (zone.isImportantBlock(b)) {
                 event.setCancelled(true);
-                return;
             }
         }
     }
@@ -465,7 +462,6 @@ public class WarBlockListener implements Listener {
             // if the zone is unbreakable, no one but zone makers can break blocks (even then, zone makers in a team can't break blocks
             War.war.badMsg(player, "The blocks in this zone are unbreakable!");
             event.setCancelled(true);
-            return;
         }
     }
 }

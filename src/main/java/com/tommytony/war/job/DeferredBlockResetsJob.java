@@ -125,10 +125,9 @@ public class DeferredBlockResetsJob implements Runnable {
                             && other.getY() == doorBlock.getY() - 1
                             && other.getZ() == doorBlock.getZ()) {
                         // doorBlock is above
-                        Block above = worldBlock;
                         Block below = world.getBlockAt(other.getX(), other.getY(), other.getZ());
-                        above.setTypeId(doorBlock.getBlockType());
-                        above.setData(doorBlock.getBlockData());
+                        worldBlock.setTypeId(doorBlock.getBlockType());
+                        worldBlock.setData(doorBlock.getBlockData());
                         below.setTypeId(other.getBlockType());
                         below.setData(other.getBlockData());
                         scrubDroppedDoors(below);
@@ -138,12 +137,11 @@ public class DeferredBlockResetsJob implements Runnable {
                             && other.getZ() == doorBlock.getZ()) {
                         // doorBlock is below
                         Block above = world.getBlockAt(other.getX(), other.getY(), other.getZ());
-                        Block below = worldBlock;
                         above.setTypeId(doorBlock.getBlockType());
                         above.setData(doorBlock.getBlockData());
-                        below.setTypeId(other.getBlockType());
-                        below.setData(other.getBlockData());
-                        scrubDroppedDoors(below);
+                        worldBlock.setTypeId(other.getBlockType());
+                        worldBlock.setData(other.getBlockData());
+                        scrubDroppedDoors(worldBlock);
                         break;
                     }
                 }

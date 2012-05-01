@@ -2,7 +2,6 @@ package com.tommytony.war;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -127,10 +126,7 @@ public class Warzone {
     }
 
     public boolean ready() {
-        if (this.volume.hasTwoCorners() && !this.volume.tooSmall() && !this.volume.tooBig()) {
-            return true;
-        }
-        return false;
+        return this.volume.hasTwoCorners() && !this.volume.tooSmall() && !this.volume.tooBig();
     }
 
     public List<Team> getTeams() {
@@ -384,7 +380,7 @@ public class Warzone {
         // Reset inventory to loadout
         PlayerInventory playerInv = player.getInventory();
         playerInv.clear();
-        playerInv.clear(playerInv.getSize() + 0);
+        playerInv.clear(playerInv.getSize());
         playerInv.clear(playerInv.getSize() + 1);
         playerInv.clear(playerInv.getSize() + 2);
         playerInv.clear(playerInv.getSize() + 3); // helmet/blockHead
@@ -511,7 +507,7 @@ public class Warzone {
 
     private void playerInvFromInventoryStash(PlayerInventory playerInv, PlayerState originalContents) {
         playerInv.clear();
-        playerInv.clear(playerInv.getSize() + 0);
+        playerInv.clear(playerInv.getSize());
         playerInv.clear(playerInv.getSize() + 1);
         playerInv.clear(playerInv.getSize() + 2);
         playerInv.clear(playerInv.getSize() + 3); // helmet/blockHead
@@ -758,7 +754,7 @@ public class Warzone {
                 guard.updatePlayerPosition(player.getLocation());
             } else {
                 // new guard
-                guard = new ZoneWallGuard(player, War.war, this, wall);
+                guard = new ZoneWallGuard(player, this, wall);
                 this.zoneWallGuards.add(guard);
             }
             protecting = true;
@@ -1136,10 +1132,7 @@ public class Warzone {
     }
 
     public boolean isFlagThief(String suspect) {
-        if (this.flagThieves.containsKey(suspect)) {
-            return true;
-        }
-        return false;
+        return this.flagThieves.containsKey(suspect);
     }
 
     public Team getVictimTeamForFlagThief(String thief) {
@@ -1156,10 +1149,7 @@ public class Warzone {
     }
 
     public boolean isBombThief(String suspect) {
-        if (this.bombThieves.containsKey(suspect)) {
-            return true;
-        }
-        return false;
+        return this.bombThieves.containsKey(suspect);
     }
 
     public Bomb getBombForThief(String thief) {
@@ -1177,10 +1167,7 @@ public class Warzone {
     }
 
     public boolean isCakeThief(String suspect) {
-        if (this.cakeThieves.containsKey(suspect)) {
-            return true;
-        }
-        return false;
+        return this.cakeThieves.containsKey(suspect);
     }
 
     public Cake getCakeForThief(String thief) {
@@ -1222,10 +1209,7 @@ public class Warzone {
 //	}
 
     public boolean isDeadMan(String playerName) {
-        if (this.deadMenInventories.containsKey(playerName)) {
-            return true;
-        }
-        return false;
+        return this.deadMenInventories.containsKey(playerName);
     }
 
     public void restoreDeadmanInventory(Player player) {
@@ -1233,7 +1217,6 @@ public class Warzone {
             this.playerInvFromInventoryStash(player.getInventory(), this.deadMenInventories.get(player.getName()));
             this.deadMenInventories.remove(player.getName());
         }
-
     }
 
     public void setRallyPoint(Location location) {
@@ -1269,10 +1252,8 @@ public class Warzone {
                 teamsWithEnough++;
             }
         }
-        if (teamsWithEnough >= this.getWarzoneConfig().getInt(WarzoneConfig.MINTEAMS)) {
-            return true;
-        }
-        return false;
+
+        return teamsWithEnough >= this.getWarzoneConfig().getInt(WarzoneConfig.MINTEAMS);
     }
 
     public HashMap<String, LoadoutSelection> getLoadoutSelections() {
@@ -1308,9 +1289,7 @@ public class Warzone {
 
             int currentIndex = selection.getSelectedIndex();
             int i = 0;
-            Iterator<String> it = sortedNames.iterator();
-            while (it.hasNext()) {
-                String name = (String)it.next();
+            for (String name : sortedNames) {
                 if (i == currentIndex) {
                     this.resetInventory(playerTeam, player, loadouts.get(name));
                     if (isFirstRespawn && playerTeam.getInventories().resolveLoadouts().keySet().size() > 1) {

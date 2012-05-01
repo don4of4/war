@@ -29,8 +29,9 @@ public class WarTxtMapper {
     }
 
     public static void load(boolean convertingToYml) {
-        (War.war.getDataFolder()).mkdir();
-        (new File(War.war.getDataFolder().getPath() + "/dat")).mkdir();
+        War.war.getDataFolder().mkdir();
+        new File(War.war.getDataFolder().getPath() + "/dat").mkdir();
+
         PropertiesFile warConfig = new PropertiesFile(War.war.getDataFolder().getPath() + "/war.txt");
         try {
             warConfig.load();

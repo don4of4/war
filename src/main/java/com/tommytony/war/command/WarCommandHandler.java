@@ -29,15 +29,13 @@ public class WarCommandHandler {
      */
     public boolean handle(CommandSender sender, Command cmd, String[] args) {
         String command = cmd.getName();
-        String[] arguments = null;
+        String[] arguments;
 
         // parse prefixed commands
         if ((command.equals("war") || command.equals("War")) && args.length > 0) {
             command = args[0];
             arguments = new String[args.length - 1];
-            for (int i = 1; i <= arguments.length; i++) {
-                arguments[i - 1] = args[i];
-            }
+            System.arraycopy(args, 1, arguments, 0, arguments.length);
 
             if (arguments.length == 1 && (arguments[0].equals("help") || arguments[0].equals("h"))) {
                 // show /war help

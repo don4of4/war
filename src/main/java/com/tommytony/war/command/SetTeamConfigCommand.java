@@ -74,9 +74,7 @@ public class SetTeamConfigCommand extends AbstractZoneMakerCommand {
                 }
                 // More than one param: the arguments need to be shifted
                 String[] newargs = new String[this.args.length - 1];
-                for (int i = 1; i < this.args.length; i++) {
-                    newargs[i - 1] = this.args[i];
-                }
+                System.arraycopy(this.args, 1, newargs, 0, this.args.length - 1);
                 this.args = newargs;
             }
 
@@ -98,9 +96,7 @@ public class SetTeamConfigCommand extends AbstractZoneMakerCommand {
                 if (teamByName != null) {
                     // first param was team, shift again
                     String[] newargs = new String[this.args.length - 1];
-                    for (int i = 1; i < this.args.length; i++) {
-                        newargs[i - 1] = this.args[i];
-                    }
+                    System.arraycopy(this.args, 1, newargs, 0, this.args.length - 1);
                     this.args = newargs;
                 }
 
@@ -121,9 +117,7 @@ public class SetTeamConfigCommand extends AbstractZoneMakerCommand {
                 } else {
                     // first param was to print, shift again
                     String[] newargs = new String[this.args.length - 1];
-                    for (int i = 1; i < this.args.length; i++) {
-                        newargs[i - 1] = this.args[i];
-                    }
+                    System.arraycopy(this.args, 1, newargs, 0, this.args.length - 1);
                     this.args = newargs;
                 }
                 wantsToPrint = true;

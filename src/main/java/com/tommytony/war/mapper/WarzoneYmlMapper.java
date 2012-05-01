@@ -314,7 +314,7 @@ public class WarzoneYmlMapper {
     public static void save(Warzone warzone, boolean saveAllBlocks) {
         YamlConfiguration warzoneYmlConfig = new YamlConfiguration();
         ConfigurationSection warzoneRootSection = warzoneYmlConfig.createSection("set");
-        (new File(War.war.getDataFolder().getPath() + "/dat/warzone-" + warzone.getName())).mkdir();	// create folder
+        new File(War.war.getDataFolder().getPath() + "/dat/warzone-" + warzone.getName()).mkdir();	// create folder
 
         ConfigurationSection warzoneSection = warzoneRootSection.createSection("warzone." + warzone.getName());
 
@@ -533,7 +533,7 @@ public class WarzoneYmlMapper {
     }
 
     private static int toIntYaw(float yaw) {
-        int intYaw = 0;
+        int intYaw;
         if (yaw >= 0) {
             intYaw = (int) (yaw % 360);
         } else {

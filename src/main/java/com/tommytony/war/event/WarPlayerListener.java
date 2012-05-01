@@ -150,7 +150,6 @@ public class WarPlayerListener implements Listener {
                         if (itemStack != null && itemStack.getType() == team.getKind().getMaterial() && player.getInventory().contains(new ItemStack(team.getKind().getMaterial(), team.getKind().getData()))) {
                             // Can't pick up a second precious block
                             event.setCancelled(true);
-                            return;
                         }
                     }
                 }
@@ -293,7 +292,7 @@ public class WarPlayerListener implements Listener {
         if (locLobby != null) {
             Warzone zone = locLobby.getZone();
             Team oldTeam = Team.getTeamByPlayerName(player.getName());
-            boolean isAutoAssignGate = false;
+            boolean isAutoAssignGate;
             if (oldTeam == null && canPlay) { // trying to counter spammy player move
                 isAutoAssignGate = zone.getLobby().isAutoAssignGate(playerLoc);
                 if (isAutoAssignGate) {
@@ -462,7 +461,7 @@ public class WarPlayerListener implements Listener {
 
                 player.setHealth(newHp);
                 String isS = "s";
-                String heartNum = ""; // since (newHp-currentHp)/2 won't give the right amount
+                String heartNum; // since (newHp-currentHp)/2 won't give the right amount
                 if (newHp - currentHp == 2) { // no 's' in 'hearts' when it's just one heart
                     isS = "";
                     heartNum = "one ";
@@ -749,7 +748,6 @@ public class WarPlayerListener implements Listener {
             Warzone zone = Warzone.getZoneByLocation(playerLoc);
             event.setTo(zone.getTeleport());
             War.war.badMsg(player, "You can't be inside a warzone without a team.");
-            return;
         }
     }
 
