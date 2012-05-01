@@ -15,98 +15,98 @@ import com.tommytony.war.volume.Volume;
  *
  */
 public class Bomb {
-	private Location location;
-	private Volume volume;
+    private Location location;
+    private Volume volume;
 
-	private final String name;
-	private Warzone warzone;
-	private Player capturer;
+    private final String name;
+    private Warzone warzone;
+    private Player capturer;
 
-	public Bomb(String name, Warzone warzone, Location location) {
-		this.name = name;
-		this.location = location;
-		this.warzone = warzone;
-		this.volume = new Volume("bomb-" + name, warzone.getWorld());
-		this.setLocation(location);
-	}
+    public Bomb(String name, Warzone warzone, Location location) {
+        this.name = name;
+        this.location = location;
+        this.warzone = warzone;
+        this.volume = new Volume("bomb-" + name, warzone.getWorld());
+        this.setLocation(location);
+    }
 
-	public void addBombBlocks() {
-		this.volume.setToMaterial(Material.AIR);
+    public void addBombBlocks() {
+        this.volume.setToMaterial(Material.AIR);
 
-		int x = this.location.getBlockX();
-		int y = this.location.getBlockY();
-		int z = this.location.getBlockZ();
+        int x = this.location.getBlockX();
+        int y = this.location.getBlockY();
+        int z = this.location.getBlockZ();
 
-		// center
-		this.warzone.getWorld().getBlockAt(x, y - 1, z).getState().setType(Material.OBSIDIAN);
+        // center
+        this.warzone.getWorld().getBlockAt(x, y - 1, z).getState().setType(Material.OBSIDIAN);
 
-		// inner ring
-		this.warzone.getWorld().getBlockAt(x + 1, y - 1, z + 1).setType(Material.GLOWSTONE);
-		this.warzone.getWorld().getBlockAt(x + 1, y - 1, z).setType(Material.OBSIDIAN);
-		this.warzone.getWorld().getBlockAt(x + 1, y - 1, z - 1).setType(Material.GLOWSTONE);
+        // inner ring
+        this.warzone.getWorld().getBlockAt(x + 1, y - 1, z + 1).setType(Material.GLOWSTONE);
+        this.warzone.getWorld().getBlockAt(x + 1, y - 1, z).setType(Material.OBSIDIAN);
+        this.warzone.getWorld().getBlockAt(x + 1, y - 1, z - 1).setType(Material.GLOWSTONE);
 
-		this.warzone.getWorld().getBlockAt(x, y - 1, z + 1).setType(Material.OBSIDIAN);
-		this.warzone.getWorld().getBlockAt(x, y - 1, z).setType(Material.GLOWSTONE);
-		this.warzone.getWorld().getBlockAt(x, y - 1, z - 1).setType(Material.OBSIDIAN);
+        this.warzone.getWorld().getBlockAt(x, y - 1, z + 1).setType(Material.OBSIDIAN);
+        this.warzone.getWorld().getBlockAt(x, y - 1, z).setType(Material.GLOWSTONE);
+        this.warzone.getWorld().getBlockAt(x, y - 1, z - 1).setType(Material.OBSIDIAN);
 
-		this.warzone.getWorld().getBlockAt(x - 1, y - 1, z + 1).setType(Material.GLOWSTONE);
-		this.warzone.getWorld().getBlockAt(x - 1, y - 1, z).setType(Material.OBSIDIAN);
-		this.warzone.getWorld().getBlockAt(x - 1, y - 1, z - 1).setType(Material.GLOWSTONE);
+        this.warzone.getWorld().getBlockAt(x - 1, y - 1, z + 1).setType(Material.GLOWSTONE);
+        this.warzone.getWorld().getBlockAt(x - 1, y - 1, z).setType(Material.OBSIDIAN);
+        this.warzone.getWorld().getBlockAt(x - 1, y - 1, z - 1).setType(Material.GLOWSTONE);
 
-		// block holder
-		this.warzone.getWorld().getBlockAt(x, y, z).setType(Material.OBSIDIAN);
-		Block tntBlock = this.warzone.getWorld().getBlockAt(x, y + 1, z);
-		tntBlock.setType(Material.TNT);
-	}
+        // block holder
+        this.warzone.getWorld().getBlockAt(x, y, z).setType(Material.OBSIDIAN);
+        Block tntBlock = this.warzone.getWorld().getBlockAt(x, y + 1, z);
+        tntBlock.setType(Material.TNT);
+    }
 
-	public boolean isBombBlock(Location otherLocation) {
-		int x = this.location.getBlockX();
-		int y = this.location.getBlockY() + 1;
-		int z = this.location.getBlockZ();
-		int otherX = otherLocation.getBlockX();
-		int otherY = otherLocation.getBlockY();
-		int otherZ = otherLocation.getBlockZ();
-		
-		return x == otherX
-			&& y == otherY
-			&& z == otherZ;
-	}
+    public boolean isBombBlock(Location otherLocation) {
+        int x = this.location.getBlockX();
+        int y = this.location.getBlockY() + 1;
+        int z = this.location.getBlockZ();
+        int otherX = otherLocation.getBlockX();
+        int otherY = otherLocation.getBlockY();
+        int otherZ = otherLocation.getBlockZ();
 
-	public void capture(Player capturer) {
-		this.capturer = capturer;
-	}
-	
-	public boolean isCaptured() {
-		return this.capturer != null;
-	}
+        return x == otherX
+                && y == otherY
+                && z == otherZ;
+    }
 
-	public void uncapture() {
-		this.capturer = null;
-	}
+    public void capture(Player capturer) {
+        this.capturer = capturer;
+    }
 
-	public Location getLocation() {
-		return this.location;
-	}
+    public boolean isCaptured() {
+        return this.capturer != null;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public void uncapture() {
+        this.capturer = null;
+    }
 
-	public void setLocation(Location location) {
-		Block locationBlock = this.warzone.getWorld().getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ());
-		this.volume.setCornerOne(locationBlock.getRelative(BlockFace.DOWN).getRelative(BlockFace.EAST, 1).getRelative(BlockFace.SOUTH, 1));
-		this.volume.setCornerTwo(locationBlock.getRelative(BlockFace.UP, 2).getRelative(BlockFace.WEST, 1).getRelative(BlockFace.NORTH, 1));
-		this.volume.saveBlocks();
-		this.location = location;
-		this.addBombBlocks();
-	}
+    public Location getLocation() {
+        return this.location;
+    }
 
-	public Volume getVolume() {
-		return this.volume;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setVolume(Volume newVolume) {
-		this.volume = newVolume;
+    public void setLocation(Location location) {
+        Block locationBlock = this.warzone.getWorld().getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+        this.volume.setCornerOne(locationBlock.getRelative(BlockFace.DOWN).getRelative(BlockFace.EAST, 1).getRelative(BlockFace.SOUTH, 1));
+        this.volume.setCornerTwo(locationBlock.getRelative(BlockFace.UP, 2).getRelative(BlockFace.WEST, 1).getRelative(BlockFace.NORTH, 1));
+        this.volume.saveBlocks();
+        this.location = location;
+        this.addBombBlocks();
+    }
 
-	}
+    public Volume getVolume() {
+        return this.volume;
+    }
+
+    public void setVolume(Volume newVolume) {
+        this.volume = newVolume;
+
+    }
 }

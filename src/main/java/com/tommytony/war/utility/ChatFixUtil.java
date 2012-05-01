@@ -18,168 +18,168 @@ import org.bukkit.command.CommandSender;
  * WARNING: Above is a hypothesis I have created based on what my experiments have shown. I am fairly sure it is correct but please help me test it further.
  */
 public class ChatFixUtil {
-	public final static char deg = '\u00A7';
-	public final static int lineLength = 53;
+    public final static char deg = '\u00A7';
+    public final static int lineLength = 53;
 
-	/**
-	 * This method wraps the msg for you at row lengths of 53, avoids client crash scenarios and makes the previous color continue on the next line.
-	 *
-	 * The upsides with filtering your messages through this method are: - No client crashes. - Line wrapping with preserved color.
-	 *
-	 * The downsides are: - The width of the chat window will not be used to it's fullest. For example you can fit more that 53 commas (,) in a chatwindow row but the line would break after 53 displayed chars.
-	 *
-	 * Suggested usage: NO NEED TO USE the fix method for static help pages in your plugin. As the text is static you can make sure there is no client crash yourself and be able to use the full line length.
-	 *
-	 * DO USE in cases like where you output colored messages with playernames in your plugin. As the player names have different length there is potential for client crash.
-	 */
-	public static ArrayList<String> fix(String msg) {
-		// Make sure the end of msg is good
-		msg = ChatFixUtil.cleanMsgEnding(msg);
+    /**
+     * This method wraps the msg for you at row lengths of 53, avoids client crash scenarios and makes the previous color continue on the next line.
+     *
+     * The upsides with filtering your messages through this method are: - No client crashes. - Line wrapping with preserved color.
+     *
+     * The downsides are: - The width of the chat window will not be used to it's fullest. For example you can fit more that 53 commas (,) in a chatwindow row but the line would break after 53 displayed chars.
+     *
+     * Suggested usage: NO NEED TO USE the fix method for static help pages in your plugin. As the text is static you can make sure there is no client crash yourself and be able to use the full line length.
+     *
+     * DO USE in cases like where you output colored messages with playernames in your plugin. As the player names have different length there is potential for client crash.
+     */
+    public static ArrayList<String> fix(String msg) {
+        // Make sure the end of msg is good
+        msg = ChatFixUtil.cleanMsgEnding(msg);
 
-		ArrayList<String> ret = new ArrayList<String>();
-		int displen = 0; // The number of displayed chars in row so far.
-		String row = "";
-		String latestColor = null;
+        ArrayList<String> ret = new ArrayList<String>();
+        int displen = 0; // The number of displayed chars in row so far.
+        String row = "";
+        String latestColor = null;
 
-		for (int i = 0; i < msg.length(); i++) {
-			if (displen == ChatFixUtil.lineLength) {
-				// it is time to start on the next row!
-				ret.add(row);
-				displen = 0;
-				row = "";
-				if (latestColor != null) {
-					row += ChatFixUtil.deg + latestColor;
-				}
-			}
-			char c = msg.charAt(i);
+        for (int i = 0; i < msg.length(); i++) {
+            if (displen == ChatFixUtil.lineLength) {
+                // it is time to start on the next row!
+                ret.add(row);
+                displen = 0;
+                row = "";
+                if (latestColor != null) {
+                    row += ChatFixUtil.deg + latestColor;
+                }
+            }
+            char c = msg.charAt(i);
 
-			if (c == ChatFixUtil.deg) {
-				latestColor = String.valueOf(msg.charAt(i + 1));
-				row += ChatFixUtil.deg + latestColor;
-				i++;
-			} else {
-				displen += 1;
-				row += c;
-			}
-		}
-		ret.add(row);
-		return ret;
-	}
+            if (c == ChatFixUtil.deg) {
+                latestColor = String.valueOf(msg.charAt(i + 1));
+                row += ChatFixUtil.deg + latestColor;
+                i++;
+            } else {
+                displen += 1;
+                row += c;
+            }
+        }
+        ret.add(row);
+        return ret;
+    }
 
-	public static ArrayList<String> fix(List<String> messages) {
-		ArrayList<String> ret = new ArrayList<String>();
-		for (String message : messages) {
-			ret.addAll(ChatFixUtil.fix(message));
-		}
-		return ret;
-	}
+    public static ArrayList<String> fix(List<String> messages) {
+        ArrayList<String> ret = new ArrayList<String>();
+        for (String message : messages) {
+            ret.addAll(ChatFixUtil.fix(message));
+        }
+        return ret;
+    }
 
-	/**
-	 * Removes the ending chars as long as they are deg or deg+'anychar' or a space As I see it we would never want those chars at the end of a msg.
-	 */
-	protected static String cleanMsgEnding(String msg) {
+    /**
+     * Removes the ending chars as long as they are deg or deg+'anychar' or a space As I see it we would never want those chars at the end of a msg.
+     */
+    protected static String cleanMsgEnding(String msg) {
 
-		while (msg.length() > 0) {
-			if (msg.endsWith(String.valueOf(ChatFixUtil.deg)) || msg.endsWith(" ")) {
-				msg = msg.substring(0, msg.length() - 1);
-			} else if (msg.length() >= 2 && msg.charAt(msg.length() - 2) == ChatFixUtil.deg) {
-				msg = msg.substring(0, msg.length() - 2);
-			} else {
-				break;
-			}
-		}
-		return msg;
-	}
+        while (msg.length() > 0) {
+            if (msg.endsWith(String.valueOf(ChatFixUtil.deg)) || msg.endsWith(" ")) {
+                msg = msg.substring(0, msg.length() - 1);
+            } else if (msg.length() >= 2 && msg.charAt(msg.length() - 2) == ChatFixUtil.deg) {
+                msg = msg.substring(0, msg.length() - 2);
+            } else {
+                break;
+            }
+        }
+        return msg;
+    }
 
-	/**
-	 * This test util assumes line break after 53 displayed chars. The fix method above breaks like that so this method should be a valid way to test if a message row would crash a client.
-	 */
-	public static String thisMsgWouldCrashClient(String str) {
-		// There would always be crash if we end with deg or deg+'anychar'
-		if (str.length() >= 1 && str.charAt(str.length() - 1) == ChatFixUtil.deg) {
-			return "Crash: The str ends with deg.";
-		} else if (str.length() >= 2 && str.charAt(str.length() - 2) == ChatFixUtil.deg) {
-			return "Crash: The str ends with deg+'anychar'.";
-		}
+    /**
+     * This test util assumes line break after 53 displayed chars. The fix method above breaks like that so this method should be a valid way to test if a message row would crash a client.
+     */
+    public static String thisMsgWouldCrashClient(String str) {
+        // There would always be crash if we end with deg or deg+'anychar'
+        if (str.length() >= 1 && str.charAt(str.length() - 1) == ChatFixUtil.deg) {
+            return "Crash: The str ends with deg.";
+        } else if (str.length() >= 2 && str.charAt(str.length() - 2) == ChatFixUtil.deg) {
+            return "Crash: The str ends with deg+'anychar'.";
+        }
 
-		int displayedChars = 0;
+        int displayedChars = 0;
 
-		for (int i = 0; i < str.length(); i++) {
-			char c = str.charAt(i);
-			if (c == ChatFixUtil.deg && displayedChars == ChatFixUtil.lineLength) {
-				return "Crash: Deg as fiftyforth \"displayed\" char";
-			} else if (c == ChatFixUtil.deg) {
-				i++; // this and next: they are not displayed... skip them...
-			} else {
-				displayedChars += 1;
-			}
-		}
-		return "all ok";
-	}
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c == ChatFixUtil.deg && displayedChars == ChatFixUtil.lineLength) {
+                return "Crash: Deg as fiftyforth \"displayed\" char";
+            } else if (c == ChatFixUtil.deg) {
+                i++; // this and next: they are not displayed... skip them...
+            } else {
+                displayedChars += 1;
+            }
+        }
+        return "all ok";
+    }
 
-	// ----------------------------------------------//
-	// Methods for effectively sending messages
-	// ----------------------------------------------//
-	// ----------------------------------------------//
-	// One player
-	// ----------------------------------------------//
-	public static void sendMessage(CommandSender player, String message, boolean fix) {
-		if (fix) {
-			List<String> messages = ChatFixUtil.fix(message);
-			ChatFixUtil.sendMessage(player, messages, false);
-		} else {
-			if (player != null) {
-				player.sendMessage(message);
-			}
-		}
-	}
+    // ----------------------------------------------//
+    // Methods for effectively sending messages
+    // ----------------------------------------------//
+    // ----------------------------------------------//
+    // One player
+    // ----------------------------------------------//
+    public static void sendMessage(CommandSender player, String message, boolean fix) {
+        if (fix) {
+            List<String> messages = ChatFixUtil.fix(message);
+            ChatFixUtil.sendMessage(player, messages, false);
+        } else {
+            if (player != null) {
+                player.sendMessage(message);
+            }
+        }
+    }
 
-	public static void sendMessage(CommandSender player, List<String> messages, boolean fix) {
-		if (fix) {
-			messages = ChatFixUtil.fix(messages);
-		}
-		for (String message : messages) {
-			ChatFixUtil.sendMessage(player, message, false);
-		}
-	}
+    public static void sendMessage(CommandSender player, List<String> messages, boolean fix) {
+        if (fix) {
+            messages = ChatFixUtil.fix(messages);
+        }
+        for (String message : messages) {
+            ChatFixUtil.sendMessage(player, message, false);
+        }
+    }
 
-	public static void sendMessage(CommandSender player, String message) {
-		ChatFixUtil.sendMessage(player, message, true);
-	}
+    public static void sendMessage(CommandSender player, String message) {
+        ChatFixUtil.sendMessage(player, message, true);
+    }
 
-	public static void sendMessage(CommandSender player, List<String> messages) {
-		ChatFixUtil.sendMessage(player, messages, true);
-	}
+    public static void sendMessage(CommandSender player, List<String> messages) {
+        ChatFixUtil.sendMessage(player, messages, true);
+    }
 
-	// ----------------------------------------------//
-	// Many CommandSenders
-	// ----------------------------------------------//
-	public static void sendMessage(Collection<CommandSender> players, String message, boolean fix) {
-		if (fix) {
-			List<String> messages = ChatFixUtil.fix(message);
-			ChatFixUtil.sendMessage(players, messages, false);
-		} else {
-			for (CommandSender player : players) {
-				ChatFixUtil.sendMessage(player, message, false);
-			}
-		}
-	}
+    // ----------------------------------------------//
+    // Many CommandSenders
+    // ----------------------------------------------//
+    public static void sendMessage(Collection<CommandSender> players, String message, boolean fix) {
+        if (fix) {
+            List<String> messages = ChatFixUtil.fix(message);
+            ChatFixUtil.sendMessage(players, messages, false);
+        } else {
+            for (CommandSender player : players) {
+                ChatFixUtil.sendMessage(player, message, false);
+            }
+        }
+    }
 
-	public static void sendMessage(Collection<CommandSender> players, List<String> messages, boolean fix) {
-		if (fix) {
-			messages = ChatFixUtil.fix(messages);
-		}
+    public static void sendMessage(Collection<CommandSender> players, List<String> messages, boolean fix) {
+        if (fix) {
+            messages = ChatFixUtil.fix(messages);
+        }
 
-		for (String message : messages) {
-			ChatFixUtil.sendMessage(players, message, false);
-		}
-	}
+        for (String message : messages) {
+            ChatFixUtil.sendMessage(players, message, false);
+        }
+    }
 
-	public static void sendMessage(Collection<CommandSender> players, String message) {
-		ChatFixUtil.sendMessage(players, message, true);
-	}
+    public static void sendMessage(Collection<CommandSender> players, String message) {
+        ChatFixUtil.sendMessage(players, message, true);
+    }
 
-	public static void sendMessage(Collection<CommandSender> players, List<String> messages) {
-		ChatFixUtil.sendMessage(players, messages, true);
-	}
+    public static void sendMessage(Collection<CommandSender> players, List<String> messages) {
+        ChatFixUtil.sendMessage(players, messages, true);
+    }
 }

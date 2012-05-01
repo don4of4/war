@@ -4,11 +4,11 @@ import com.tommytony.war.War;
 
 public class SpoutFadeOutMessageJob implements Runnable {
 
-	public SpoutFadeOutMessageJob() {
-	}
+    public SpoutFadeOutMessageJob() {
+    }
 
-	public void run() {
-		War.war.getSpoutDisplayer().fadeOutOldMessages();
-	}
+    public void run() {
+        War.war.getSpoutDisplayer().fadeOutOldMessages();
+    }
 
 }

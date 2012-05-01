@@ -18,65 +18,65 @@ import com.tommytony.war.structure.ZoneLobby;
  * @author Tim Düsterhus
  */
 public class DeleteZoneCommand extends AbstractZoneMakerCommand {
-	public DeleteZoneCommand(WarCommandHandler handler, CommandSender sender, String[] args) throws NotZoneMakerException {
-		super(handler, sender, args);
-	}
+    public DeleteZoneCommand(WarCommandHandler handler, CommandSender sender, String[] args) throws NotZoneMakerException {
+        super(handler, sender, args);
+    }
 
-	@Override
-	public boolean handle() {
-		Warzone zone;
+    @Override
+    public boolean handle() {
+        Warzone zone;
 
-		if (this.args.length == 1) {
-			zone = Warzone.getZoneByName(this.args[0]);
-		} else if (this.args.length == 0) {
-			if (!(this.getSender() instanceof Player)) {
-				return false;
-			}
-			zone = Warzone.getZoneByLocation((Player) this.getSender());
-			if (zone == null) {
-				ZoneLobby lobby = ZoneLobby.getLobbyByLocation((Player) this.getSender());
-				if (lobby == null) {
-					return false;
-				}
-				zone = lobby.getZone();
-			}
-		} else {
-			return false;
-		}
+        if (this.args.length == 1) {
+            zone = Warzone.getZoneByName(this.args[0]);
+        } else if (this.args.length == 0) {
+            if (!(this.getSender() instanceof Player)) {
+                return false;
+            }
+            zone = Warzone.getZoneByLocation((Player) this.getSender());
+            if (zone == null) {
+                ZoneLobby lobby = ZoneLobby.getLobbyByLocation((Player) this.getSender());
+                if (lobby == null) {
+                    return false;
+                }
+                zone = lobby.getZone();
+            }
+        } else {
+            return false;
+        }
 
-		if (zone == null) {
-			return false;
-		} else if (!this.isSenderAuthorOfZone(zone)) {
-			return true;
-		}
+        if (zone == null) {
+            return false;
+        } else if (!this.isSenderAuthorOfZone(zone)) {
+            return true;
+        }
 
-		for (Team t : zone.getTeams()) {
-			if (t.getTeamFlag() != null) {
-				t.getFlagVolume().resetBlocks();
-			}
-			t.getSpawnVolume().resetBlocks();
+        for (Team t : zone.getTeams()) {
+            if (t.getTeamFlag() != null) {
+                t.getFlagVolume().resetBlocks();
+            }
+            t.getSpawnVolume().resetBlocks();
 
-			// reset inventory
-			for (Player p : t.getPlayers()) {
-				zone.restorePlayerState(p);
-			}
-		}
-		for (Monument m : zone.getMonuments()) {
-			m.getVolume().resetBlocks();
-		}
-		if (zone.getLobby() != null) {
-			zone.getLobby().getVolume().resetBlocks();
-		}
-		zone.getVolume().resetBlocks();
-		War.war.getWarzones().remove(zone);
-		WarYmlMapper.save();
-		WarzoneYmlMapper.delete(zone.getName());
-		if (War.war.getWarHub() != null) { // warhub has to change
-			War.war.getWarHub().getVolume().resetBlocks();
-			War.war.getWarHub().initialize();
-		}
-		this.msg("Warzone " + zone.getName() + " removed.");
+            // reset inventory
+            for (Player p : t.getPlayers()) {
+                zone.restorePlayerState(p);
+            }
+        }
+        for (Monument m : zone.getMonuments()) {
+            m.getVolume().resetBlocks();
+        }
+        if (zone.getLobby() != null) {
+            zone.getLobby().getVolume().resetBlocks();
+        }
+        zone.getVolume().resetBlocks();
+        War.war.getWarzones().remove(zone);
+        WarYmlMapper.save();
+        WarzoneYmlMapper.delete(zone.getName());
+        if (War.war.getWarHub() != null) { // warhub has to change
+            War.war.getWarHub().getVolume().resetBlocks();
+            War.war.getWarHub().initialize();
+        }
+        this.msg("Warzone " + zone.getName() + " removed.");
 
-		return true;
-	}
+        return true;
+    }
 }

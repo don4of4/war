@@ -11,18 +11,18 @@ import com.tommytony.war.War;
 
 public class WarServerListener implements Listener {
 
-	@EventHandler
-	public void onPluginDisable(final PluginDisableEvent event) {
-		if (event.getPlugin().getDataFolder().getName().equals("Spout")) {
-			if (War.war.isSpoutServer()) {
-				for (Player player : War.war.getServer().getOnlinePlayers()) {
-		            SpoutPlayer sp = SpoutManager.getPlayer(player);
-		            if (sp.isSpoutCraftEnabled()) {
-		                sp.getMainScreen().removeWidgets(War.war);
-		            }
-		        }
-				War.war.getSpoutDisplayer().clearAll();
-			}
-		}
-	}
+    @EventHandler
+    public void onPluginDisable(final PluginDisableEvent event) {
+        if (event.getPlugin().getDataFolder().getName().equals("Spout")) {
+            if (War.war.isSpoutServer()) {
+                for (Player player : War.war.getServer().getOnlinePlayers()) {
+                    SpoutPlayer sp = SpoutManager.getPlayer(player);
+                    if (sp.isSpoutCraftEnabled()) {
+                        sp.getMainScreen().removeWidgets(War.war);
+                    }
+                }
+                War.war.getSpoutDisplayer().clearAll();
+            }
+        }
+    }
 }

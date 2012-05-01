@@ -13,38 +13,38 @@ import com.tommytony.war.Warzone;
  * @author Tim Düsterhus
  */
 public class WarzoneCommand extends AbstractWarCommand {
-	public WarzoneCommand(WarCommandHandler handler, CommandSender sender, String[] args) {
-		super(handler, sender, args);
-	}
+    public WarzoneCommand(WarCommandHandler handler, CommandSender sender, String[] args) {
+        super(handler, sender, args);
+    }
 
-	@Override
-	public boolean handle() {
-		if (!(this.getSender() instanceof Player)) {
-			this.badMsg("You can't do this if you are not in-game.");
-			return true;
-		}
+    @Override
+    public boolean handle() {
+        if (!(this.getSender() instanceof Player)) {
+            this.badMsg("You can't do this if you are not in-game.");
+            return true;
+        }
 
-		if (this.args.length != 1) {
-			return false;
-		}
-		Player player = (Player) this.getSender();
+        if (this.args.length != 1) {
+            return false;
+        }
+        Player player = (Player) this.getSender();
 
-		if (!War.war.canWarp(player)) {
-			this.badMsg("Can't warp to zone. You need the 'war.warp' permission.");
-		} else {
-			Warzone warzone = Warzone.getZoneByName(this.args[0]);
-			if (warzone != null && warzone.getTeleport() != null) {
-				Warzone playerWarzone = Warzone.getZoneByPlayerName(player.getName());
-				if (playerWarzone != null) {
-					playerWarzone.handlePlayerLeave(player, warzone.getTeleport(), true);
-				} else {
-					player.teleport(warzone.getTeleport());
-				}
-				return true;
-			}
+        if (!War.war.canWarp(player)) {
+            this.badMsg("Can't warp to zone. You need the 'war.warp' permission.");
+        } else {
+            Warzone warzone = Warzone.getZoneByName(this.args[0]);
+            if (warzone != null && warzone.getTeleport() != null) {
+                Warzone playerWarzone = Warzone.getZoneByPlayerName(player.getName());
+                if (playerWarzone != null) {
+                    playerWarzone.handlePlayerLeave(player, warzone.getTeleport(), true);
+                } else {
+                    player.teleport(warzone.getTeleport());
+                }
+                return true;
+            }
 
-			this.badMsg("No such warzone.");
-		}
-		return true;
-	}
+            this.badMsg("No such warzone.");
+        }
+        return true;
+    }
 }

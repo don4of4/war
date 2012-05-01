@@ -25,11 +25,11 @@
     <repositories>
         <repository>
             <id>spout-repo</id>
-            <url>http://nexus.getspout.org/content/groups/public/</url>
+            <url>http://nexus.spout.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>sk89q-mvn2</id>
-            <url>http://mvn2.sk89q.com/repo</url>
+            <id>sk89q-mvn</id>
+            <url>http://http://maven.sk89q.com/repo/</url>
         </repository>
     </repositories>
 
@@ -84,14 +84,14 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.1-R6</version>
-            <type>pom</type>
+            <version>1.2.5-R1.0</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.1-R6</version>
-            <type>pom</type>
+            <version>1.2.5-R1.0</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
