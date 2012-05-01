@@ -1,6 +1,7 @@
 package com.tommytony.war.config;
 
 public enum WarzoneConfig {
+    ALLOWSWITCHING (Boolean.class),
     AUTOASSIGN (Boolean.class),
     BLOCKHEADS (Boolean.class),
     DEATHMESSAGES (Boolean.class),
