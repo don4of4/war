@@ -3,16 +3,23 @@
 
     <!-- Project information -->
     <groupId>com.tommytony</groupId>
-    <artifactId>war</artifactId>
-    <version>1.7.2-PREVIEW</version>
-    <packaging>jar</packaging>
-
+    <artifactId>War</artifactId>
+    <version>${m.version}-${p.version}</version>
     <name>War</name>
     <url>http://war.tommytony.com</url>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <build.number>Unknown</build.number>
+        <m.version>1.2.5</m.version>
+        <p.version>R0.1</p.version>
+    </properties>
+
     <!-- Source code -->
     <scm>
-        <url>https://github.com/MiracleM4n/war</url>
+        <developerConnection>scm:git:git@github.com:MiracleM4n/${project.name}.git</developerConnection>
+        <connection>scm:git:git://github.com/MiracleM4n/${project.name}.git</connection>
+        <url>https://github.com/MiracleM4n/${project.name}</url>
     </scm>
 
     <!-- Continuous integration -->

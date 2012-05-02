@@ -1,5 +1,5 @@
 name: War
-version: 1.7.2-PREVIEW (Doolittle)
+version: ${m.version}-${build.number}-${p.version}
 description: Lets you create TDM and CTF arenas (warzones) for a fast-paced and structured PVP experience.
 author: tommytony
 website: http://war.tommytony.com
