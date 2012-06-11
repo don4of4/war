@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <m.version>1.2.5</m.version>
-        <p.version>R0.3</p.version>
+        <p.version>R0.4</p.version>
     </properties>
 
     <!-- Source code -->
@@ -91,13 +91,13 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.2.5-R1.0</version>
+            <version>1.2.5-R4.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.2.5-R1.0</version>
+            <version>1.2.5-R4.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
