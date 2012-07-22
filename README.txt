@@ -1,4 +1,4 @@
-War adds team deathmatch and capture-the-flag to Minecraft SMP.
+War adds team deathmatch and capture-the-flag to Minecraft SMP. And more to come!!!
 
 The plugin started on hMod but was ported to Bukkit from v0.3 on.
 
